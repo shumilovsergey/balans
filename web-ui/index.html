@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Balans</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="palette-strip">
+    <div class="swatch" style="background:#E8E3D9"></div>
+    <div class="swatch" style="background:#C4895A"></div>
+    <div class="swatch" style="background:#B84C2A"></div>
+    <div class="swatch" style="background:#1A1817"></div>
+    <span class="palette-label">Platinum · Caramel · Fire Brick · Xeric Black</span>
+  </div>
+
+  <div class="phone">
+    <div class="island"></div>
+
+    <!-- Status bar -->
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <span>●●●</span>
+        <span>WiFi</span>
+        <span>🔋</span>
+      </div>
+    </div>
+
+    <!-- Top nav (title updates per screen) -->
+    <div class="nav-top">
+      <div>
+        <div class="nav-top-title">Today</div>
+        <div class="nav-top-date">Monday, March 17</div>
+      </div>
+      <div class="nav-top-avatar">🙂</div>
+    </div>
+
+    <!-- Dynamic screen content -->
+    <div id="screen" class="screen"></div>
+
+    <!-- Tab bar -->
+    <div class="tab-bar-wrap">
+      <div class="tab-bar">
+        <div class="tab-pill">
+
+          <!-- 1. Info -->
+          <button class="tab" onclick="setTab(this,'info')" title="Info">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9.5"/>
+              <line x1="12" y1="11" x2="12" y2="17"/>
+              <circle cx="12" cy="7.5" r="0.9" fill="currentColor" stroke="none"/>
+            </svg>
+          </button>
+
+          <!-- 2. Weight / Scales -->
+          <button class="tab" onclick="setTab(this,'scale')" title="Weight">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="9" x2="12" y2="19"/>
+              <line x1="9"  y1="19" x2="15" y2="19"/>
+              <path d="M10,9 L12,6.5 L14,9"/>
+              <line x1="4" y1="9" x2="20" y2="9"/>
+              <line x1="4" y1="9" x2="4" y2="14"/>
+              <path d="M2,14 Q4,17 6,14"/>
+              <line x1="20" y1="9" x2="20" y2="14"/>
+              <path d="M18,14 Q20,17 22,14"/>
+            </svg>
+          </button>
+
+          <!-- 3. Balans / Main — default active -->
+          <button class="tab active" onclick="setTab(this,'main')" title="Balans">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12,2 A5,5 0 0,1 12,12 A5,5 0 0,0 12,22"/>
+              <circle cx="12" cy="7"  r="1.6" fill="currentColor" stroke="none"/>
+              <circle cx="12" cy="17" r="1.6" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+          </button>
+
+          <!-- 4. Food / Calories -->
+          <button class="tab" onclick="setTab(this,'food')" title="Food">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="8"  y1="3" x2="8"  y2="9"/>
+              <line x1="11" y1="3" x2="11" y2="9"/>
+              <path d="M8,9 Q9.5,12 11,9"/>
+              <line x1="9.5" y1="12" x2="9.5" y2="21"/>
+              <path d="M16,3 Q18.5,5 18,11 L16,11"/>
+              <line x1="16" y1="11" x2="16" y2="21"/>
+            </svg>
+          </button>
+
+        </div>
+
+        <!-- 5. Settings — separate circle -->
+        <div class="tab-solo">
+          <button class="tab" onclick="setTab(this,'settings')" title="Settings">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4,15a1.65,1.65,0,0,0,.33,1.82l.06.06a2,2,0,0,1-2.83,2.83l-.06-.06a1.65,1.65,0,0,0-1.82-.33,1.65,1.65,0,0,0-1,1.51V21a2,2,0,0,1-4,0v-.09A1.65,1.65,0,0,0,9,19.4a1.65,1.65,0,0,0-1.82.33l-.06.06a2,2,0,0,1-2.83-2.83l.06-.06A1.65,1.65,0,0,0,4.68,15a1.65,1.65,0,0,0-1.51-1H3a2,2,0,0,1,0-4h.09A1.65,1.65,0,0,0,4.6,9,1.65,1.65,0,0,0,4.27,7.18l-.06-.06a2,2,0,0,1,2.83-2.83l.06.06A1.65,1.65,0,0,0,9,4.68a1.65,1.65,0,0,0,1-1.51V3a2,2,0,0,1,4,0v.09a1.65,1.65,0,0,0,1,1.51,1.65,1.65,0,0,0,1.82-.33l.06-.06a2,2,0,0,1,2.83,2.83l-.06.06A1.65,1.65,0,0,0,19.4,9a1.65,1.65,0,0,0,1.51,1H21a2,2,0,0,1,0,4h-.09A1.65,1.65,0,0,0,19.4,15z"/>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
