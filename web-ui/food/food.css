@@ -1,13 +1,356 @@
-.placeholder-screen {
+/* ── Category accent colours ── */
+:root {
+  --morning: #E09B3A;
+  --day:     #5A9B6A;
+  --evening: #6B7EC7;
+}
+
+/* ── Screen shell ── */
+.food-screen {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+
+.food-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.food-panel.hidden { display: none; }
+
+/* Panel appear animation */
+.food-panel:not(.hidden) {
+  animation: panelAppear .18s ease;
+}
+@keyframes panelAppear {
+  from { opacity: 0; transform: scale(.98); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Section tabs ── */
+.sec-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 0 16px 12px;
+  flex-shrink: 0;
+}
+.sec-tab {
+  flex: 1;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 0;
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--bg-card2);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background .18s, color .18s;
+}
+.sec-tab.active { background: var(--xeric); color: var(--platinum); }
+
+/* ── Meal list ── */
+.meal-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+.meal-list::-webkit-scrollbar { display: none; }
+
+/* ── Meal card ── */
+.meal-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 11px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+}
+.meal-card.selected {
+  border-color: var(--accent);
+  background: rgba(184,76,42,.05);
+}
+
+/* Select circle — left */
+.sel-circle {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(26,24,23,.18);
+  background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  padding: 0;
+  transition: background .15s, border-color .15s;
+}
+.sel-circle svg {
+  width: 13px; height: 13px;
+  color: #fff;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.meal-card.selected .sel-circle {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.meal-card.selected .sel-circle svg { opacity: 1; }
+
+/* Meal info — middle (passive, no click) */
+.meal-info {
+  flex: 1;
+  min-width: 0;
+  pointer-events: none;
+}
+.meal-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.meal-meta {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* Kcal */
+.meal-kcal {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  pointer-events: none;
+}
+.meal-card.selected .meal-kcal { color: var(--accent); }
+
+/* Delete circle — right */
+.del-circle {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(184,76,42,.09);
+  color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  padding: 0;
+  transition: background .15s, transform .1s;
+}
+.del-circle svg { width: 13px; height: 13px; }
+.del-circle:active { background: rgba(184,76,42,.25); transform: scale(.9); }
+
+/* ── Add row (+ at bottom of list) ── */
+.add-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0 2px;
+  cursor: pointer;
+}
+.add-circle {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .12s, opacity .15s;
+}
+.add-circle svg { width: 16px; height: 16px; }
+.add-row:active .add-circle { transform: scale(.88); opacity: .85; }
+
+/* ── Log summary ── */
+.log-summary {
+  margin: 0 16px;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.log-kcal {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.log-kcal span:first-child {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+.log-kcal-unit {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.log-macros {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: right;
+  line-height: 1.6;
+}
+
+/* ── Action row ── */
+.food-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px 8px;
+  flex-shrink: 0;
+}
+
+/* ── FAB buttons ── */
+.fab {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity .15s, transform .12s;
+  flex-shrink: 0;
+}
+.fab svg { width: 22px; height: 22px; }
+.fab:active { transform: scale(.91); }
+.fab:hover  { opacity: .85; }
+.fab-ghost  { background: var(--bg-card2); color: var(--text-secondary); }
+.fab-accent { background: var(--fire-brick); color: #fff; }
+
+/* ══════════════════════════════════
+   ADD FORM PANEL
+══════════════════════════════════ */
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 16px 14px;
+  flex-shrink: 0;
+}
+.form-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.form-close-btn {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-card2);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0;
+  transition: opacity .15s;
+}
+.form-close-btn svg { width: 14px; height: 14px; }
+.form-close-btn:hover { opacity: .75; }
+
+/* Form scrollable body */
+.add-form {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+.add-form::-webkit-scrollbar { display: none; }
+
+/* Category toggle */
+.cat-toggle {
+  display: flex;
+  gap: 6px;
+}
+.cat-btn {
+  flex: 1;
+  border: 1.5px solid var(--bg-card2);
+  border-radius: 10px;
+  padding: 8px 4px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.cat-btn.active[data-cat="morning"] { background: rgba(224,155,58,.15);  border-color: var(--morning); color: var(--morning); }
+.cat-btn.active[data-cat="day"]     { background: rgba(90,155,106,.15);  border-color: var(--day);     color: var(--day); }
+.cat-btn.active[data-cat="evening"] { background: rgba(107,126,199,.15); border-color: var(--evening); color: var(--evening); }
+
+/* Inputs */
+.form-input {
+  border: 1.5px solid var(--bg-card2);
+  border-radius: 12px;
+  padding: 10px 34px 10px 12px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg);
+  outline: none;
+  width: 100%;
+  transition: border-color .18s;
+  -moz-appearance: textfield;
+}
+.form-input::-webkit-inner-spin-button,
+.form-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.form-input:focus { border-color: var(--accent); }
+.form-input-name { padding-right: 12px; }
+
+.input-unit-wrap {
+  position: relative;
+  flex: 1;
+}
+.input-unit {
+  position: absolute;
+  right: 10px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.form-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* Save button */
+.btn-add-save {
+  margin: 0 16px 8px;
+  border: none;
+  border-radius: 14px;
+  padding: 13px;
+  background: var(--fire-brick);
+  color: #fff;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 32px 24px;
-  text-align: center;
+  gap: 7px;
+  flex-shrink: 0;
+  transition: opacity .15s, transform .12s;
 }
-.placeholder-icon  { font-size: 52px; line-height: 1; }
-.placeholder-title { font-family: "Playfair Display", serif; font-size: 22px; font-weight: 700; color: var(--text-primary); }
-.placeholder-desc  { font-size: 14px; color: var(--text-secondary); line-height: 1.5; max-width: 220px; }
+.btn-add-save:hover  { opacity: .88; }
+.btn-add-save:active { transform: scale(.98); }

@@ -1,5 +1,100 @@
-<div class="placeholder-screen">
-  <div class="placeholder-icon">🍽️</div>
-  <div class="placeholder-title">Calories</div>
-  <div class="placeholder-desc">Log meals and calculate calories for everything you eat.</div>
+<div class="food-screen">
+
+  <!-- ═══════════════ SELECT VIEW ═══════════════ -->
+  <div class="food-panel" id="panel-select">
+
+    <div class="sec-tabs" id="select-tabs">
+      <button class="sec-tab active" data-sec="morning">Morning</button>
+      <button class="sec-tab"        data-sec="day">Day</button>
+      <button class="sec-tab"        data-sec="evening">Evening</button>
+    </div>
+
+    <div id="meal-list" class="meal-list"></div>
+
+    <div class="log-summary">
+      <div class="log-kcal">
+        <span id="total-kcal">0</span>
+        <span class="log-kcal-unit">kcal</span>
+      </div>
+      <div class="log-macros" id="log-macros">Select meals above</div>
+    </div>
+
+    <div class="food-actions">
+      <button class="fab fab-ghost" title="AI Calorie Scanner (coming soon)" onclick="return false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2.5"/>
+          <path d="M7,7 L8.5,4 L15.5,4 L17,7"/>
+          <circle cx="12" cy="14" r="3.4"/>
+          <circle cx="19" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+        </svg>
+      </button>
+      <button class="fab fab-accent" title="Save today's log" id="btn-save-log">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20,6 9,17 4,12"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════ ADD FORM ═══════════════ -->
+  <div class="food-panel hidden" id="panel-form">
+
+    <div class="form-header">
+      <span class="form-title">New meal</span>
+      <button class="form-close-btn" id="btn-close-form">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="add-form">
+
+      <div class="cat-toggle" id="form-cat-toggle">
+        <button class="cat-btn active" data-cat="morning">Morning</button>
+        <button class="cat-btn"        data-cat="day">Day</button>
+        <button class="cat-btn"        data-cat="evening">Evening</button>
+      </div>
+
+      <input type="text" id="f-name" class="form-input form-input-name" placeholder="Meal name">
+
+      <div class="form-row">
+        <div class="input-unit-wrap">
+          <input type="number" id="f-grams" class="form-input" placeholder="0" min="0">
+          <span class="input-unit">g</span>
+        </div>
+        <div class="input-unit-wrap">
+          <input type="number" id="f-kcal" class="form-input" placeholder="0" min="0">
+          <span class="input-unit">kcal</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="input-unit-wrap">
+          <input type="number" id="f-protein" class="form-input" placeholder="0" min="0" step="0.1">
+          <span class="input-unit">P</span>
+        </div>
+        <div class="input-unit-wrap">
+          <input type="number" id="f-fat" class="form-input" placeholder="0" min="0" step="0.1">
+          <span class="input-unit">F</span>
+        </div>
+        <div class="input-unit-wrap">
+          <input type="number" id="f-carbs" class="form-input" placeholder="0" min="0" step="0.1">
+          <span class="input-unit">C</span>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn-add-save" id="btn-save-meal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px;flex-shrink:0">
+        <polyline points="20,6 9,17 4,12"/>
+      </svg>
+      Save meal
+    </button>
+
+  </div>
+
 </div>
